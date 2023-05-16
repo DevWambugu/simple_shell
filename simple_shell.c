@@ -81,6 +81,45 @@ char *read_input(void)
 		return NULL;
 	}
 }
+void create_and_write_file(char **args)
+{
+	int i = 0;
+	char *file_content = NULL;
+	char *file_name = NULL;
+	int file_descriptor;
+	ssize_t bytes_written;
+
+	while (args[i] != NULL)
+	{
+		if (strcmp(args[i], ">>") == 0)
+		{
+			break;
+		}
+		i++;
+	}
+	printf("%d", i);
+	if (args[i + 1] == NULL)
+	{
+		write(STDERR_FILENO, "Invalid input. Please enter file name\n", strlen("Invalid input. Please enter file name\n"));
+		exit(1);
+	}
+	file_content = args[1];
+	file_name = args[3];
+	file_descriptor = open(file_name, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	if (file_descriptor == -1)
+	{
+		write(STDERR_FILENO, "could not open file\n", strlen("could not open file\n"));
+		exit(1);
+	}
+	bytes_written = write(file_descriptor, file_content, strlen(file_content));
+	if (bytes_written == -1)
+	{
+		write(STDERR_FILENO, "could not write file\n", strlen("could not write file\n"));
+		return;
+	}
+	close(file_descriptor);
+}
+
 int main(void)
 {
 	const char *prompt = "#cisfun$ ";
@@ -88,6 +127,7 @@ int main(void)
 	char **sub_strings;
 	/**int max_processes = 10;*/
 	int status;
+	int i = 1;
 	/*int num_processes = 0;*/
 
 	while (1)
@@ -110,10 +150,34 @@ int main(void)
 			}
 			else if (pid == 0)
 			{
-				execvp(sub_strings[0], sub_strings);
-				write(STDERR_FILENO, "Command not executed\n",
-					strlen("Command not executed\n"));
-				exit(1);
+				if (strcmp(sub_strings[0], "echo") == 0 && strcmp(sub_strings[2], ">>") == 0)
+				{
+					create_and_write_file(sub_strings);
+				}
+				else if (strcmp(sub_strings[0], "echo") == 0 && sub_strings[2] == NULL)
+				{
+					write(STDOUT_FILENO, sub_strings[1], strlen(sub_strings[1]));
+					write(STDOUT_FILENO, "\n", 1);
+					exit(1);
+				}
+				else if (strcmp(sub_strings[0], "echo") == 0 && strcmp(sub_strings[1], ">>") != 0)
+				{
+					while ((sub_strings[i]) != NULL)
+					{
+						write(STDOUT_FILENO, sub_strings[i], strlen(sub_strings[i]));
+						write(STDOUT_FILENO, " ", 1);
+						i++;
+					}
+					write(STDOUT_FILENO, "\n", 1);
+					exit(1);
+				}
+				else
+				{
+					execvp(sub_strings[0], sub_strings);
+					write(STDERR_FILENO, "Command not executed. Enter a valid command\n",
+						strlen("Command not executed. Enter a valid command\n"));
+					exit(1);
+				}
 			}
 			else
 			{
