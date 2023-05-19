@@ -1,16 +1,4 @@
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include "main.h"
-#include <dirent.h>
-#include <sys/stat.h>
-
-#define BUFFER_SIZE 1024
 
 char **split_input(char *input)
 {
