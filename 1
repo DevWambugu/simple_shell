@@ -272,7 +272,7 @@ int main(void)
 							dup_result = dup2(file_descriptor, STDOUT_FILENO);
 							if (dup_result == -1)
 							{
-								perror("dupulicate_error");
+								perror("dup2");
 								exit(1);
 							}
 							close(file_descriptor);
