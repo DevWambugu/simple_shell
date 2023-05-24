@@ -225,6 +225,8 @@ int main(void)
 	char *file_name = NULL;
 	int file_descriptor;
 	int dup_result;
+	int no_length = getpid();
+	char numbers_array[20];
 
         while (1)
         {
@@ -240,6 +242,10 @@ int main(void)
 		if (strcmp(sub_strings[0], "env") == 0 && (sub_strings[1] == NULL))
 		{
 			print_env();
+		}
+		if (strcmp(sub_strings[0], "#") == 0)
+		{
+			continue;
 		}
 		if (sub_strings[0] != NULL)
 		{
@@ -283,6 +289,12 @@ int main(void)
 							string = sub_strings[i];
 							string[strlen(sub_strings[i]) - 1] = '\0';
 							write(STDOUT_FILENO, string + 1, strlen(string + 1));
+						}
+						else if (strcmp(sub_strings[1], "$$") == 0 && strcmp(sub_strings[2], "#") == 0)
+						{
+							sprintf(numbers_array, "%d", no_length);
+							write(STDOUT_FILENO, numbers_array, strlen(numbers_array));
+							break;
 						}
 						else
 						{
