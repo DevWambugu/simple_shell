@@ -14,7 +14,7 @@
 
 #define BUFFER_SIZE 1024
 
-int main(void);
+int main(int argc, char *argv[]);
 char *read_input(void);
 char **split_input(char *input);
 char *get_full_path(char *command);
