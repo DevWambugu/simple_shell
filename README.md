@@ -1,1 +1,1 @@
-Write a UNIX command line interpreter.
+In this project. You will write a simple shell
