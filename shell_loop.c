@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * hsh - main shell loop
+ * hsh - shell loop
  * @info: parameter & return info
  * @av: argument vector from main
  *
@@ -48,9 +48,9 @@ int hsh(info_t *info, char **av)
  * @info: parameter & return info
  *
  * Return: -1(not found),
- * 	0(success),
- * 	1(failed),
- * 	2 if builtin signals exit()
+ * 0(success),
+ * 1(failed),
+ * 2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
@@ -78,10 +78,10 @@ int find_builtin(info_t *info)
 }
 
 /**
- * find_cmd - a command in PATH
+ * find_cmd - command in PATH
  * @info: parameter & return info
  *
- * Return: void
+ * Return: nothing
  */
 void find_cmd(info_t *info)
 {
@@ -123,7 +123,7 @@ void find_cmd(info_t *info)
  * fork_cmd - forks an exec thread to run command
  * @info: parameter & return info
  *
- * Return: void
+ * Return: nothing
  */
 void fork_cmd(info_t *info)
 {

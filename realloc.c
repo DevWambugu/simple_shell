@@ -18,7 +18,7 @@ char *_memset(char *s, char b, unsigned int n)
 
 /**
  * ffree - it frees a string of strings
- * @pp: string of strings
+ * @pp: str of strings
  */
 void ffree(char **pp)
 {
@@ -32,10 +32,10 @@ void ffree(char **pp)
 }
 
 /**
- * _realloc - reallocates a block of memory
+ * _realloc - reallocates  memory
  * @ptr: a pointer to the previous mallocked block
- * @old_size: byte size of a previous block
- * @new_size: byte size of a new block
+ * @old_size: byte size of the previous block
+ * @new_size: byte size of the new block
  *
  * Return: pointer to the old block
  */
